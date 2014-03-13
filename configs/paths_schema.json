@@ -1,0 +1,12 @@
+{
+    "properties": {
+        "archive": {
+            "type": "string",
+            "required": true
+        },
+        "report": {
+            "type": "string",
+            "required": true
+        }
+    }
+}

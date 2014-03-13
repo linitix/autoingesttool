@@ -1,0 +1,35 @@
+{
+    "properties": {
+        "username": {
+            "type": "string",
+            "required": true
+        },
+        "password": {
+            "type": "string",
+            "required": true
+        },
+        "vendor_number": {
+            "type": "string",
+            "required": true
+        },
+        "report_type": {
+            "type": "string",
+            "required": true,
+            "enum": ["Sales", "Newsstand", "Opt-In"]
+        },
+        "date_type": {
+            "type": "string",
+            "required": true,
+            "enum": ["Daily", "Weekly", "Monthly", "Yearly", "Inception"]
+        },
+        "report_subtype": {
+            "type": "string",
+            "required": true,
+            "enum": ["Summary", "Detailed"]
+        },
+        "report_date": {
+            "type": "string",
+            "required": true
+        }
+    }
+}
