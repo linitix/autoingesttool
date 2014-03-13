@@ -31,9 +31,7 @@
             "enum": ["Summary", "Detailed"]
         },
         "report_date": {
-            "type": "string",
-            "required": true,
-            "minLength": 1
+            "type": "string"
         }
     }
 }

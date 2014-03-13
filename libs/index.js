@@ -1,7 +1,11 @@
+var path = require("path");
+var fs = require("fs");
+
 var async = require("async");
 var mkdirp = require("mkdirp");
 var jsonschema = require("jsonschema");
 var request = require("request");
+var moment = require("moment");
 
 var Configurator = require("./configurator");
 var InvalidParametersError = require("../errors/invalid_parameters_error");
@@ -10,6 +14,8 @@ var EmptyFileError = require("../errors/empty_file_error");
 
 var TXT_EXT = ".txt";
 var JSON_EXT = ".json";
+var GZIP_EXT = ".gz";
+var ITUNES_CONNECT_REPORTING_URL = "https://reportingitc.apple.com/autoingestion.tft";
 
 var parametersSchema = Configurator.loadSync("parameters_schema");
 var pathsSchema = Configurator.loadSync("paths_schema");
@@ -22,6 +28,9 @@ exports.EMPTY_FILE_ERROR = EmptyFileError;
 exports.downloadReportInPathsWithParameters = downloadReportInPathsWithParameters;
 
 function downloadReportInPathsWithParameters(parameters, paths, callback) {
+    if (!parameters.report_date)
+        parameters["report_date"] = moment().format("YYYYMMDD");
+
     async.waterfall(
         [
             function (callback) {
@@ -32,11 +41,73 @@ function downloadReportInPathsWithParameters(parameters, paths, callback) {
             },
             function (callback) {
                 generateFileName(parameters, callback);
+            },
+            function (fileName, callback) {
+                downloadReportArchive(fileName, parameters, paths, callback);
             }
         ],
         function (err, result) {
             if (err) return callback(err);
             callback(null, result);
+        }
+    );
+}
+
+function downloadReportArchive(fileName, parameters, paths, callback) {
+    var data = {
+        USERNAME: parameters.username,
+        PASSWORD: parameters.password,
+        VNDNUMBER: parameters.vendor_number,
+        TYPEOFREPORT: parameters.report_type,
+        DATETYPE: parameters.date_type,
+        REPORTTYPE: parameters.report_subtype,
+        REPORTDATE: parameters.report_date
+    };
+    var archiveStream = null;
+
+    paths.archive = path.join(paths.archive, fileName + TXT_EXT + GZIP_EXT);
+
+    if (fs.existsSync(paths.archive))
+        return callback(null, fileName);
+
+    archiveStream = fs.createWriteStream(paths.archive);
+
+    request.post(ITUNES_CONNECT_REPORTING_URL).form(data).pipe(archiveStream);
+
+    archiveStream.on("error", callback);
+    archiveStream.on(
+        "finish",
+        function () {
+            isArchiveFileEmpty(
+                paths.archive,
+                function (err) {
+                    if (err) return callback(err);
+
+                    callback(null, fileName);
+                }
+            )
+        }
+    );
+}
+
+function isArchiveFileEmpty(archivePath, callback) {
+    fs.stat(
+        archivePath,
+        function (err, stats) {
+            if (err) return callback(err);
+
+            if (stats.size === 0) {
+                fs.unlink(
+                    archivePath,
+                    function (err) {
+                        if (err) return callback(err);
+
+                        callback(new EmptyFileError("The report you requested is not available at this time. Please try again in a few minutes."));
+                    }
+                );
+            } else {
+                callback();
+            }
         }
     );
 }
