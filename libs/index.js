@@ -1,5 +1,6 @@
 var path = require("path");
 var fs = require("fs");
+var zlib = require("zlib");
 
 var async = require("async");
 var mkdirp = require("mkdirp");
@@ -44,11 +45,41 @@ function downloadReportInPathsWithParameters(parameters, paths, callback) {
             },
             function (fileName, callback) {
                 downloadReportArchive(fileName, parameters, paths, callback);
+            },
+            function (fileName, callback) {
+                extractReportArchive(fileName, paths, callback);
             }
         ],
         function (err, result) {
             if (err) return callback(err);
             callback(null, result);
+        }
+    );
+}
+
+function extractReportArchive(fileName, paths, callback) {
+    var reportStream = null;
+
+    paths.report = path.join(paths.report, fileName + TXT_EXT);
+
+    if (fs.existsSync(paths.report))
+        return callback(null, fileName);
+
+    reportStream = fs.createWriteStream(paths.report);
+
+    reportStream.on("error", callback);
+    reportStream.on(
+        "finish",
+        function () {
+            callback(null, fileName);
+        }
+    );
+
+    zlib.gunzip(
+        fs.readFileSync(paths.archive),
+        function (err, data) {
+            if (err) return callback(err);
+            reportStream.end(data.toString(), "utf8");
         }
     );
 }
