@@ -48,11 +48,69 @@ function downloadReportInPathsWithParameters(parameters, paths, callback) {
             },
             function (fileName, callback) {
                 extractReportArchive(fileName, paths, callback);
+            },
+            function (fileName, callback) {
+                createJSON(fileName, paths, callback);
             }
         ],
-        function (err, result) {
+        function (err) {
             if (err) return callback(err);
-            callback(null, result);
+            callback(null, paths);
+        }
+    );
+}
+
+function createJSON(fileName, paths, callback) {
+    paths.json_report = path.join(paths.json_report, fileName + JSON_EXT);
+
+    if (fs.existsSync(paths.json_report))
+        return callback();
+
+    textToJson(
+        paths,
+        function (err, data) {
+            if (err) return callback(err);
+
+            fs.writeFile(
+                paths.json_report,
+                JSON.stringify(data),
+                {
+                    encoding: "utf8"
+                },
+                callback
+            );
+        }
+    )
+}
+
+function textToJson(paths, callback) {
+    var content = [];
+
+    fs.readFile(
+        paths.report,
+        {
+            encoding: "utf8"
+        },
+        function (err, data) {
+            if (err) return callback(err);
+
+            var lines = data.split("\n");
+
+            async.eachSeries(
+                lines,
+                function (line, callback) {
+                    var items = line.split("\t");
+
+                    content.push(items);
+
+                    callback();
+                },
+                function (err) {
+                    if (err) return callback(err);
+
+                    callback(null, content);
+                }
+            );
         }
     );
 }
