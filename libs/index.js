@@ -22,12 +22,29 @@ function downloadReportInPathsWithParameters(parameters, paths, callback) {
         [
             function (callback) {
                 validateAllJSON(parameters, paths, callback);
+            },
+            function (callback) {
+                createDirectories(paths, callback);
             }
         ],
         function (err, result) {
             if (err) return callback(err);
             callback(null, result);
         }
+    );
+}
+
+function createDirectories(paths, callback) {
+    async.parallel(
+        [
+            function (callback) {
+                mkdirp(paths.report, callback);
+            },
+            function (callback) {
+                mkdirp(paths.archive, callback);
+            }
+        ],
+        callback
     );
 }
 
