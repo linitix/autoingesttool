@@ -2,15 +2,18 @@
     "properties": {
         "username": {
             "type": "string",
-            "required": true
+            "required": true,
+            "minLength": 1
         },
         "password": {
             "type": "string",
-            "required": true
+            "required": true,
+            "minLength": 1
         },
         "vendor_number": {
             "type": "string",
-            "required": true
+            "required": true,
+            "minLength": 1
         },
         "report_type": {
             "type": "string",
@@ -29,7 +32,8 @@
         },
         "report_date": {
             "type": "string",
-            "required": true
+            "required": true,
+            "minLength": 1
         }
     }
 }

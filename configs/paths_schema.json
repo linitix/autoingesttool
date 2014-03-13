@@ -2,11 +2,13 @@
     "properties": {
         "archive": {
             "type": "string",
-            "required": true
+            "required": true,
+            "minLength": 1
         },
         "report": {
             "type": "string",
-            "required": true
+            "required": true,
+            "minLength": 1
         }
     }
 }
