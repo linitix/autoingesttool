@@ -8,8 +8,12 @@ var InvalidParametersError = require("../errors/invalid_parameters_error");
 var InvalidPathsError = require("../errors/invalid_paths_error");
 var EmptyFileError = require("../errors/empty_file_error");
 
+var TXT_EXT = ".txt";
+var JSON_EXT = ".json";
+
 var parametersSchema = Configurator.loadSync("parameters_schema");
 var pathsSchema = Configurator.loadSync("paths_schema");
+var fileNamePrefix = Configurator.loadSync("filename_prefix");
 var Validator = new jsonschema.Validator();
 
 exports.INVALID_PARAMETERS_ERROR = InvalidParametersError;
@@ -25,6 +29,9 @@ function downloadReportInPathsWithParameters(parameters, paths, callback) {
             },
             function (callback) {
                 createDirectories(paths, callback);
+            },
+            function (callback) {
+                generateFileName(parameters, callback);
             }
         ],
         function (err, result) {
@@ -34,16 +41,27 @@ function downloadReportInPathsWithParameters(parameters, paths, callback) {
     );
 }
 
+function generateFileName(parameters, callback) {
+    var prefixArray = [ parameters.report_type, parameters.report_subtype, parameters.date_type ];
+    var prefixString = prefixArray.join("_");
+    var fileName = null;
+
+    if (!fileNamePrefix[prefixString])
+        return callback(new InvalidParametersError("Please enter all the required parameters. For help, please download the latest User Guide from the Sales and Trends module in iTunes Connect."));
+
+    fileName = fileNamePrefix[prefixString] + "_" + parameters.vendor_number + "_" + parameters.report_date;
+
+    callback(null, fileName);
+}
+
 function createDirectories(paths, callback) {
-    async.parallel(
-        [
-            function (callback) {
-                mkdirp(paths.report, callback);
-            },
-            function (callback) {
-                mkdirp(paths.archive, callback);
-            }
-        ],
+    var keys = Object.keys(paths);
+
+    async.each(
+        keys,
+        function (key, callback) {
+            mkdirp(paths[key], callback);
+        },
         callback
     );
 }

@@ -1,0 +1,12 @@
+{
+    "Sales_Summary_Daily": "S_S_D",
+    "Sales_Summary_Weekly": "S_S_W",
+    "Sales_Summary_Monthly": "S_S_M",
+    "Sales_Summary_Yearly": "S_S_Y",
+    "Sales_Opt-In_Weekly": "S_O_W",
+    "Sales_Opt-In_Monthly": "S_O_M",
+    "Sales_Opt-In_Yearly": "S_O_Y",
+    "Newsstand_Detailed_Daily": "N_D_D",
+    "Newsstand_Detailed_Weekly": "N_D_W",
+    "Newsstand_Detailed_Inception": "N_D_I"
+}
