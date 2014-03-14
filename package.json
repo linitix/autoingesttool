@@ -1,39 +1,39 @@
 {
-  "name": "autoingesttool",
-  "version": "1.0.0",
-  "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
-  "os": [
-    "darwin",
-    "linux"
-  ],
-  "license": "MIT",
-  "author": "Ismael Gorissen <ismael.gorissen@linitix.com>",
-  "keywords": [
-    "Apple",
-    "sales",
-    "trends",
-    "iTunes Connect",
-    "iTunes",
-    "reports",
-    "download",
-    "newsstand",
-    "opt-in"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:linitixbackend/autoingesttool.git"
-  },
-  "bugs": {
-    "url": "https://bitbucket.org/linitixbackend/autoingesttool/issues",
-    "email": "ismael.gorissen@linitix.com"
-  },
-  "dependencies": {
-    "jsonschema": "^0.4.0",
-    "mkdirp": "^0.3.5",
-    "async": "^0.2.10",
-    "request": "^2.34.0",
-    "moment": "^2.5.1"
-  },
-  "homepage": "https://bitbucket.org/linitixbackend/autoingesttool",
-  "main": "./libs/index"
+    "name": "autoingesttool",
+    "version": "1.0.0",
+    "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
+    "os": [
+        "darwin",
+        "linux"
+    ],
+    "license": "MIT",
+    "author": "Ismael Gorissen <ismael.gorissen@linitix.com>",
+    "keywords": [
+        "Apple",
+        "sales",
+        "trends",
+        "iTunes Connect",
+        "iTunes",
+        "reports",
+        "download",
+        "newsstand",
+        "opt-in"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git@bitbucket.org:linitixbackend/autoingesttool.git"
+    },
+    "bugs": {
+        "url": "https://bitbucket.org/linitixbackend/autoingesttool/issues",
+        "email": "ismael.gorissen@linitix.com"
+    },
+    "dependencies": {
+        "jsonschema": "^0.4.0",
+        "mkdirp": "^0.3.5",
+        "async": "^0.2.10",
+        "request": "^2.34.0",
+        "moment": "^2.5.1"
+    },
+    "homepage": "https://bitbucket.org/linitixbackend/autoingesttool",
+    "main": "./libs/index"
 }
