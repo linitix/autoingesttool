@@ -18,7 +18,7 @@
         "report_type": {
             "type": "string",
             "required": true,
-            "enum": ["Sales", "Newsstand", "Opt-In"]
+            "enum": ["Sales", "Newsstand"]
         },
         "date_type": {
             "type": "string",
@@ -28,7 +28,7 @@
         "report_subtype": {
             "type": "string",
             "required": true,
-            "enum": ["Summary", "Detailed"]
+            "enum": ["Summary", "Detailed", "Opt-In"]
         },
         "report_date": {
             "type": "string"
