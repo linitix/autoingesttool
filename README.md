@@ -47,8 +47,8 @@ var parameters = {
 	username: "ITUNES_CONNECT_USERNAME",
     password: "ITUNES_CONNECT_PASSWORD",
     vendor_number: "ITUNES_CONNECT_VENDOR_NUMBER",
-    report_type: "SALES | NEWSSTAND | OPT-IN",
-    report_subtype: "SUMMARY | DETAILED",
+    report_type: "SALES | NEWSSTAND",
+    report_subtype: "SUMMARY | DETAILED | OPT-IN",
     date_type: "DAILY | WEEKLY | MONTHLY | YEARLY",
     report_date: "DAILY=YYYYMMDD | MONTHLY=YYYYMM | YEARLY=YYYY"
 };
@@ -109,6 +109,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Changes Log
 
+###### 1.0.1
+
+* `OPT-IN` option move from `report_type` to `report_subtype` attribute.
+
 ###### 1.0.0
 
-* module creation
+* module creation.
