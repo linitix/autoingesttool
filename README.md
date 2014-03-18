@@ -190,6 +190,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Changes Log
 
+###### 1.0.3
+
+* Remove last element in report JSON file. The last element is the empty line at the end of the report file.
+
 ###### 1.0.2
 
 * Report JSON file is now an array of objects (Sales, Newsstand, Opt-in).
