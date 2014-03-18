@@ -7,6 +7,7 @@ var mkdirp = require("mkdirp");
 var jsonschema = require("jsonschema");
 var request = require("request");
 var moment = require("moment");
+var clone = require("clone");
 
 var Configurator = require("./configurator");
 var InvalidParametersError = require("../errors/invalid_parameters_error");
@@ -95,13 +96,37 @@ function textToJson(paths, callback) {
             if (err) return callback(err);
 
             var lines = data.split("\n");
+            var count = 0;
+            var headersObject = {};
+            var headersArray = null;
+            var headersLength = null;
 
             async.eachSeries(
                 lines,
                 function (line, callback) {
                     var items = line.split("\t");
 
-                    content.push(items);
+                    if (count == 0) {
+                        count++;
+                        headersArray = items;
+                        headersLength = items.length;
+
+                        items.forEach(
+                            function (item) {
+                                headersObject[item.replace(/ /g, "")] = null;
+                            }
+                        );
+                    } else {
+                        var data = clone(headersObject);
+
+                        items.forEach(
+                            function (item, index) {
+                                if (item && item !== " ") data[headersArray[index].replace(/ /g, "")] = item;
+                            }
+                        );
+
+                        content.push(data);
+                    }
 
                     callback();
                 },
