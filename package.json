@@ -1,6 +1,6 @@
 {
     "name": "autoingesttool",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
     "os": [
         "darwin",
