@@ -190,6 +190,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Changes Log
 
+###### 1.0.4
+
+* Remove debugging `console.log()`.
+
 ###### 1.0.3
 
 * Remove last element in report JSON file. The last element is the empty line at the end of the report file.

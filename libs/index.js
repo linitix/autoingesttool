@@ -132,11 +132,7 @@ function textToJson(paths, callback) {
                 },
                 function (err) {
                     if (err) return callback(err);
-
-                    console.log(content.length);
                     content.pop();
-                    console.log(content.length);
-
                     callback(null, content);
                 }
             );
