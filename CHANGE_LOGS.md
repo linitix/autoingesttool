@@ -1,5 +1,9 @@
 # Changes Log
 
+###### 1.0.6
+
+* add travis configuration file
+
 ###### 1.0.5
 
 * add badges in README
