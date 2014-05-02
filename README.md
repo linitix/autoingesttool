@@ -1,5 +1,7 @@
 # autoingesttool
 
+[![NPM version](https://badge.fury.io/js/autoingesttool.svg)](http://badge.fury.io/js/autoingesttool) [![Build Status](https://travis-ci.org/linitix/autoingesttool.svg?branch=master)](https://travis-ci.org/linitix/autoingesttool) [![Dependency Status](https://david-dm.org/linitix/autoingesttool.svg)](https://david-dm.org/linitix/autoingesttool)
+
 Apple Auto-Ingest tool written in JavaScript for NodeJS.
 
 ## Prerequesites
@@ -175,37 +177,3 @@ The report formatted in JSON will have one of these structures :
 * You can have an `INVALID_PARAMETERS_ERROR` or `INVALID_PATHS_ERROR` when there is an issue with the parameters or paths JSON.
 * If you try to download a report that have not been generated yet by Apple, you will receive an `EMPTY_FILE_ERROR` because the module have downloaded an empty file. This empty file will be removed automatically.
 * If there is no error, the archive, report and json formatted report files path will be returned as a JSON.
-
-## License
-
-The MIT License (MIT)
-
-Copyright (c) 2014 [Linitix](http://www.linitix.com/)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-## Changes Log
-
-###### 1.0.4
-
-* Remove debugging `console.log()`.
-
-###### 1.0.3
-
-* Remove last element in report JSON file. The last element is the empty line at the end of the report file.
-
-###### 1.0.2
-
-* Report JSON file is now an array of objects (Sales, Newsstand, Opt-in).
-
-###### 1.0.1
-
-* `OPT-IN` option move from `report_type` to `report_subtype` attribute.
-
-###### 1.0.0
-
-* module creation.
