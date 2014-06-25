@@ -1,5 +1,10 @@
 # Changes Log
 
+###### 1.0.7
+
+* Remove OS restrictions
+* Refactor package.json file
+
 ###### 1.0.6
 
 * add travis configuration file

@@ -1,13 +1,17 @@
 {
     "name": "autoingesttool",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
-    "os": [
-        "darwin",
-        "linux"
-    ],
     "license": "MIT",
-    "author": "Ismael Gorissen <ismael.gorissen@linitix.com>",
+    "author": {
+        "name": "Ismael Gorissen",
+        "email": "ismael.gorissen@linitix.com"
+    },
+    "contributors": [
+        {
+            "name": "Johny Varghese"
+        }
+    ],
     "keywords": [
         "Apple",
         "sales",
@@ -25,15 +29,15 @@
     },
     "bugs": {
         "url": "https://github.com/linitix/autoingesttool/issues",
-        "email": "ismael.gorissen@linitix.com"
+        "email": "npm@linitix.com"
     },
     "dependencies": {
+        "async": "^0.9.0",
         "clone": "^0.1.15",
         "jsonschema": "^0.4.0",
-        "async": "^0.8.0",
-        "mkdirp": "^0.4.0",
+        "mkdirp": "^0.5.0",
         "moment": "^2.6.0",
-        "request": "^2.34.0"
+        "request": "^2.36.0"
     },
     "main": "./libs/index"
 }
