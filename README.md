@@ -26,6 +26,11 @@ Download the [iTunes Connect Sales And Trends Guide Apps](http://www.apple.com/i
 * Choose where all files will be created.
 * Downloading cancelled if archive already exists.
 * Extraction cancelled if text file already exists.
+* Works on OS X, Windows and Linux
+
+## Contributors
+
+* Johny Varghese
 
 ## How To
 
