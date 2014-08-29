@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/linitix/autoingesttool.png?label=ready&title=Ready)](https://waffle.io/linitix/autoingesttool)
 # autoingesttool
 
 [![NPM version](https://badge.fury.io/js/autoingesttool.svg)](http://badge.fury.io/js/autoingesttool) [![Build Status](https://travis-ci.org/linitix/autoingesttool.svg?branch=master)](https://travis-ci.org/linitix/autoingesttool) [![Dependency Status](https://david-dm.org/linitix/autoingesttool.svg)](https://david-dm.org/linitix/autoingesttool)
