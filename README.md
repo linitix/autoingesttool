@@ -1,6 +1,8 @@
 # autoingesttool
 
-[![NPM version](https://badge.fury.io/js/autoingesttool.svg)](http://badge.fury.io/js/autoingesttool) [![Build Status](https://travis-ci.org/linitix/autoingesttool.svg?branch=master)](https://travis-ci.org/linitix/autoingesttool) [![Dependency Status](https://david-dm.org/linitix/autoingesttool.svg)](https://david-dm.org/linitix/autoingesttool)
+[![NPM version](https://badge.fury.io/js/autoingesttool.svg)](http://badge.fury.io/js/autoingesttool) [![Dependency Status](https://david-dm.org/linitix/autoingesttool.svg)](https://david-dm.org/linitix/autoingesttool)
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/linitix/autoingesttool?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Apple Auto-Ingest tool written in JavaScript for NodeJS.
 
