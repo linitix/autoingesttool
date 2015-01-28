@@ -1,9 +1,16 @@
 # Changes Log
 
+###### 1.0.8
+
+* remove travis.yml file
+* remove Travis badge
+* update third party modules
+* add Gitter badge
+
 ###### 1.0.7
 
-* Remove OS restrictions
-* Refactor package.json file
+* remove OS restrictions
+* refactor package.json file
 
 ###### 1.0.6
 
