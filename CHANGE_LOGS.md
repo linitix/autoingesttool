@@ -1,5 +1,9 @@
 # Changes Log
 
+###### 1.0.9
+
+* update third party modules
+
 ###### 1.0.8
 
 * remove travis.yml file
