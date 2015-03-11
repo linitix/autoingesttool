@@ -1,6 +1,6 @@
 {
   "name": "autoingesttool",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
   "license": "MIT",
   "author": {
@@ -36,12 +36,13 @@
     "email": "npm@linitix.com"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "clone": "^0.2.0",
+    "clone": "^1.0.1",
     "jsonschema": "^1.0.0",
+    "lodash": "^3.5.0",
     "mkdirp": "^0.5.0",
     "moment": "^2.9.0",
-    "request": "^2.51.0"
+    "neo-async": "^0.6.2",
+    "request": "^2.53.0"
   },
   "main": "./libs/index"
 }
