@@ -44,9 +44,13 @@
     "moment": "^2.11.2",
     "request": "^2.69.0"
   },
-  "main": "./libs/index",
+  "main": "./index",
   "devDependencies": {
+    "debug": "^2.2.0",
     "should": "^8.2.2",
     "vows": "^0.8.1"
+  },
+  "scripts": {
+    "test": "vows tests/* --spec"
   }
 }
