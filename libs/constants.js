@@ -1,25 +1,18 @@
 var debug = require("debug")("autoingesttool::constants.js");
 
-var username,
-    password,
-    vendorNumber;
 var env             = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : "development",
+    username        = process.env.USERNAME ? process.env.USERNAME : null,
+    password        = process.env.PASSWORD ? process.env.PASSWORD : null,
+    vendorNumber    = process.env.VENDOR_NUMBER ? process.env.VENDOR_NUMBER : null,
     textExt         = ".txt",
     gzipExt         = ".gz",
     jsonExt         = ".json",
     itcReportingUrl = "https://reportingitc.apple.com/autoingestion.tft";
 
 debug("environment >> %s", env);
-
-if (env === "development") {
-    username = process.env.USERNAME ? process.env.USERNAME : null;
-    password = process.env.PASSWORD ? process.env.PASSWORD : null;
-    vendorNumber = process.env.VENDOR_NUMBER ? process.env.VENDOR_NUMBER : null;
-
-    debug("username >> %s", username);
-    debug("password >> %s", password);
-    debug("vendor >> %s", vendorNumber);
-}
+debug("username >> %s", username);
+debug("password >> %s", password);
+debug("vendor >> %s", vendorNumber);
 
 module.exports = {
     ENV: env,
