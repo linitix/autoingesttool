@@ -2,11 +2,14 @@ branches:
   only:
     - master
     - develop
+
 language: node_js
 node_js:
   - "5.6"
   - "4.3"
+
 install:
   - npm install
+
 script:
   - npm test
