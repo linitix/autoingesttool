@@ -1,7 +1,8 @@
 var debug = require("debug")("autoingesttool::constants.js");
 
 var username,
-    password;
+    password,
+    vendorNumber;
 var env             = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : "development",
     textExt         = ".txt",
     gzipExt         = ".gz",
@@ -10,21 +11,23 @@ var env             = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() 
 
 debug("environment >> %s", env);
 
-if ( env === "development" )
-{
-  username = process.env.DEV_USERNAME ? process.env.DEV_USERNAME : null;
-  password = process.env.DEV_PASSWORD ? process.env.DEV_PASSWORD : null;
+if (env === "development") {
+    username = process.env.USERNAME ? process.env.USERNAME : null;
+    password = process.env.PASSWORD ? process.env.PASSWORD : null;
+    vendorNumber = process.env.VENDOR_NUMBER ? process.env.VENDOR_NUMBER : null;
 
-  debug("username >> %s", username);
-  debug("password >> %s", password);
+    debug("username >> %s", username);
+    debug("password >> %s", password);
+    debug("vendor >> %s", vendorNumber);
 }
 
 module.exports = {
-  ENV                         : env,
-  USR                         : username,
-  PWD                         : password,
-  TEXT_EXT                    : textExt,
-  GZIP_EXT                    : gzipExt,
-  JSON_EXT                    : jsonExt,
-  ITUNES_CONNECT_REPORTING_URL: itcReportingUrl
+    ENV: env,
+    USERNAME: username,
+    PASSWORD: password,
+    VND_NUMBER: vendorNumber,
+    TEXT_EXT: textExt,
+    GZIP_EXT: gzipExt,
+    JSON_EXT: jsonExt,
+    ITUNES_CONNECT_REPORTING_URL: itcReportingUrl
 };
