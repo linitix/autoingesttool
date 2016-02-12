@@ -101,3 +101,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### Custom template
+
+tmp/*
+!tmp/.gitkeep
