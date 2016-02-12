@@ -48,6 +48,8 @@ function join(elements, separator) {
 }
 
 function isFileEmpty(path, callback) {
+    debug("Check file: %s", path);
+
     fs.stat(
         path,
         function (err, stats) {

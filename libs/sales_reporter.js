@@ -27,7 +27,7 @@ function downloadSalesReport(params, paths, callback) {
     var filename;
 
     if (!params.report_date) {
-        params.report_date = moment().format(DAILY_DATE_FORMAT);
+        params.report_date = moment().subtract(1, "days").format(DAILY_DATE_FORMAT);
     }
 
     async.waterfall(
@@ -100,7 +100,7 @@ function _downloadReportArchive(filename, params, paths, callback) {
 
     paths.archive = path.join(paths.archive, filename) + Constants.TEXT_EXT + Constants.GZIP_EXT;
 
-    debug(paths);
+    debug(paths.archive);
 
     if (fs.existsSync(paths.archive)) {
         return callback();
@@ -131,7 +131,7 @@ function _extractReportArchive(filename, paths, callback) {
 
     paths.report = path.join(paths.report, filename + Constants.TEXT_EXT);
 
-    debug(paths);
+    debug(paths.report);
 
     if (fs.existsSync(paths.report)) {
         return callback();
@@ -160,7 +160,7 @@ function _extractReportArchive(filename, paths, callback) {
 function _transformTextReportToJson(filename, paths, callback) {
     paths.json_report = path.join(paths.json_report, filename + Constants.JSON_EXT);
 
-    debug(paths);
+    debug(paths.json_report);
 
     if (fs.existsSync(paths.json_report)) {
         return callback();
