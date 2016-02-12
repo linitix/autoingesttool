@@ -12,7 +12,8 @@ var JSONFileLoader = require("./json_file_loader"),
     Helpers        = require("./helpers"),
     Constants      = require("./constants");
 
-var InvalidParametersError = require("../errors/invalid_parameters_error");
+var InvalidParametersError = require("../errors/invalid_parameters_error"),
+    InvalidPathsError      = require("../errors/invalid_paths_error");
 
 var DAILY_DATE_FORMAT = "YYYYMMDD";
 
@@ -201,6 +202,9 @@ function _createJSON(data, callback) {
         function (line, next) {
             var items = line.split("\t");
 
+            if (items.length === 0)
+                return next();
+
             if (count === 0) {
                 count += 1;
 
@@ -231,8 +235,6 @@ function _createJSON(data, callback) {
             if (err) {
                 return callback(err);
             }
-
-            json.pop();
 
             callback(null, json);
         }
