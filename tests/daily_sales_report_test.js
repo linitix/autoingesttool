@@ -1,11 +1,11 @@
-var path = require("path");
+var path = require("path"),
+    fs   = require("fs");
 
 var vows   = require("vows"),
     should = require("should"),
     moment = require("moment");
 
-var AutoIngestTool = require("../index"),
-    Constants      = require("../libs/constants");
+var AutoIngestTool = require("../index");
 
 var TMP_DIR = path.join(__dirname, "..", "tmp");
 
@@ -20,25 +20,32 @@ suite.addBatch({
                     json_report: TMP_DIR
                 },
                 params = {
-                    username: Constants.USERNAME,
-                    password: Constants.PASSWORD,
-                    vendor_number: Constants.VND_NUMBER,
+                    username: process.env.USERNAME,
+                    password: process.env.PASSWORD,
+                    vendor_number: process.env.VENDOR_NUMBER,
                     report_type: "Sales",
                     report_subtype: "Summary",
                     date_type: "Daily",
-                    report_date: moment().subtract(1, "days").format("YYYYMMDD")
+                    report_date: moment().subtract(2, "days").format("YYYYMMDD")
                 };
 
             AutoIngestTool.downloadSalesReport(params, paths, this.callback);
         },
-        "we receive the sales report archive file": function (err, paths) {
-            return true;
-        },
-        "we receive the sales report extracted text file": function (err, paths) {
-            return true;
-        },
-        "we receive the created sales report JSON file": function (err, paths) {
-            return true;
+        "we can open the JSON file": {
+            topic: function (paths) {
+                fs.readFile(paths.json_report, {encoding: "utf8"}, this.callback);
+            },
+            "and parse it": {
+                topic: function (data) {
+                    return JSON.parse(data);
+                },
+                "the json should be an array": function (json) {
+                    json.should.be.an.Array();
+                },
+                "the json should not be empty": function (json) {
+                    json.should.not.be.empty();
+                }
+            }
         }
     }
 });
