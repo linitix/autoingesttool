@@ -115,7 +115,7 @@ AutoIngestTool.downloadSalesReport(salesParams, paths, function (err, updatedPat
     // Handle error
   if (err)
     // Handle error
-  
+
   console.log(result);
 });
 
@@ -129,7 +129,7 @@ AutoIngestTool.downloadFinancialReport(financialParams, paths, function (err, up
     // Handle error
   if (err)
     // Handle error
-  
+
   console.log(result);
 });
 ```
@@ -269,6 +269,12 @@ Finally, you can open and parse the created JSON file and process it.
 ```
 
 ## Unit Testing (only if you want to contribute)
+
+Actually you can only test sales report (daily, weekly, monthly and yearly) downloading. **Why?** We haven't created yet newsstand applications to get access to newsstand and opt-in reports.
+
+So feel free to add tests for these reports.
+
+### How To
 
 Install all dependencies and devDependencies
 
