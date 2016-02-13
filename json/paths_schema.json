@@ -1,0 +1,18 @@
+{
+  "type"      : "object",
+  "required"  : true,
+  "properties": {
+    "archive"    : {
+      "type"    : "string",
+      "required": true
+    },
+    "report"     : {
+      "type"    : "string",
+      "required": true
+    },
+    "json_report": {
+      "type"    : "string",
+      "required": true
+    }
+  }
+}
