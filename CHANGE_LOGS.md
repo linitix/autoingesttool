@@ -1,5 +1,12 @@
 # Changes Log
 
+###### 2.0.0
+
+* refactor module into 2 submodules `SalesReporter` and `FinancialReporter`
+* add unit testing with `vows`
+* upgrade project dependencies and devDependencies
+* update README
+
 ###### 1.0.9
 
 * update third party modules
