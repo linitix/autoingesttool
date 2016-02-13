@@ -1,6 +1,6 @@
 {
   "name": "autoingesttool",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
   "license": "MIT",
   "author": {
