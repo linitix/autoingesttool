@@ -1,8 +1,6 @@
 # autoingesttool
 
-[![NPM version](https://badge.fury.io/js/autoingesttool.svg)](http://badge.fury.io/js/autoingesttool) [![Dependency Status](https://david-dm.org/linitix/autoingesttool.svg)](https://david-dm.org/linitix/autoingesttool)
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/linitix/autoingesttool?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Travis Build on branch master](https://img.shields.io/travis/linitix/autoingesttool/master.svg?style=flat-square)](https://travis-ci.org/linitix/autoingesttool/branches) [![NPM total downloads per month](https://img.shields.io/npm/dm/autoingesttool.svg?style=flat-square)](https://www.npmjs.com/package/autoingesttool) [![David dependencies](https://img.shields.io/david/linitix/autoingesttool.svg?style=flat-square)](https://david-dm.org/linitix/autoingesttool) [![David dev dependencies](https://img.shields.io/david/dev/linitix/autoingesttool.svg?style=flat-square)](https://david-dm.org/linitix/autoingesttool) [![CodeClimate](https://img.shields.io/codeclimate/github/linitix/autoingesttool.svg?style=flat-square)](https://codeclimate.com/github/linitix/autoingesttool)
 
 Apple Auto-Ingest tool written in JavaScript for NodeJS.
 
@@ -12,12 +10,13 @@ Download the [iTunes Connect Sales And Trends Guide Apps](http://www.apple.com/i
 
 ## Dependencies
 
-* [jsonschema](https://www.npmjs.org/package/jsonschema) : A fast and easy to use JSON schema validator.
+* [is-my-json-valid](https://www.npmjs.org/package/is-my-json-valid) : A JSONSchema validator that uses code generation to be extremely fast.
 * [mkdirp](https://www.npmjs.org/package/mkdirp) : Recursively mkdir, like "mkdir -p".
 * [async](https://www.npmjs.org/package/async) : Higher-order functions and common patterns for asynchronous code.
 * [request](https://www.npmjs.org/package/request) : Simplified HTTP request client.
 * [moment](https://www.npmjs.org/package/moment) : Parse, manipulate, and display dates.
 * [clone](https://www.npmjs.org/package/clone) : Deep cloning of objects and arrays.
+* [lodash](https://www.npmjs.com/package/lodash) : Lodash modular utilities
 
 ## Features
 
@@ -28,82 +27,136 @@ Download the [iTunes Connect Sales And Trends Guide Apps](http://www.apple.com/i
 * Choose where all files will be created.
 * Downloading cancelled if archive already exists.
 * Extraction cancelled if text file already exists.
-* Works on OS X, Windows and Linux
 
-## Contributors
+## Installation
 
-* Johny Varghese
-
-## How To
-
-### Install
-
-```
+``` 
 $ npm install [--save] autoingesttool
 ```
 
-### Use
+## Usage
 
-###### ADD MODULE
+First you need to import the module.
 
-```javascript
+``` javascript
 var AutoIngestTool = require("autoingesttool");
 ```
 
-###### CREATE A JSON WITH ALL REQUIRED PARAMETERS
+Create a JSON object with all required parameters for `Sales` report.
 
-```javascript
+| Property       | Type   | Description                              | Possible values                          | Required |
+| -------------- | ------ | ---------------------------------------- | ---------------------------------------- | :------- |
+| username       | string | iTunes Connect account username which have access to the Sales and Trends reports. | -                                        | **YES**  |
+| password       | string | iTunes Connect account password.         | -                                        | **YES**  |
+| vendor_number  | string | iTunes Connect vendor number.            | -                                        | **YES**  |
+| report_type    | string | Report type. [Learn more](http://help.apple.com/itc/appsreporterguide/#/itc5c4817729) | Sales, Newsstand                         | **YES**  |
+| report_subtype | string | Report subtype. [Learn more](http://help.apple.com/itc/appsreporterguide/#/itc5c4817729) | Summary, Detailed, Opt-In                | **YES**  |
+| date_type      | string | Date type. [Learn more](http://help.apple.com/itc/appsreporterguide/#/itc5c4817729) | Daily, Weekly, Monthly, Yearly           | **YES**  |
+| report_date    | string | Date of the report. [Learn more](http://help.apple.com/itc/appsreporterguide/#/itc5c4817729) | *YYYYMMDD* (Daily and Weekly), *YYYYMM* (Monthly), *YYYY* (Yearly) | NO       |
+
+``` javascript
+// Sales
 var parameters = {
-	username: "ITUNES_CONNECT_USERNAME",
-    password: "ITUNES_CONNECT_PASSWORD",
-    vendor_number: "ITUNES_CONNECT_VENDOR_NUMBER",
-    report_type: "SALES | NEWSSTAND",
-    report_subtype: "SUMMARY | DETAILED | OPT-IN",
-    date_type: "DAILY | WEEKLY | MONTHLY | YEARLY",
-    report_date: "DAILY=YYYYMMDD | MONTHLY=YYYYMM | YEARLY=YYYY"
+	username: "admin",
+	password: "adminpasswd",
+	vendor_number: "88776655",
+	report_type: "Sales",
+	report_subtype: "Summary",
+	date_type: "Daily",
+	report_date: "20160201"
 };
 ```
 
-**IMPORTANT :**
+Or you can create a JSON object to download `Financial` report.
 
-* Only `report_date` is optionnal.
+| Property      | Type   | Description                              | Possible values | Required |
+| ------------- | ------ | ---------------------------------------- | --------------- | :------- |
+| username      | string | iTunes Connect account username which have access to the Sales and Trends reports. | -               | **YES**  |
+| password      | string | iTunes Connect account password.         | -               | **YES**  |
+| vendor_number | string | iTunes Connect vendor number including 2 leading zeroes. | -               | **YES**  |
+| report_type   | string | Report type. [Learn more](http://help.apple.com/itc/appsreporterguide/#/itc82976faf8) | DRR             | **YES**  |
+| region_code   | string | Two-character code of country of report to download. For a list of region codes, [see here](http://help.apple.com/itc/appsreporterguide/#/itc82976faf8). | -               | **YES**  |
+| fiscal_year   | number | Four-digit year of report to download. Year is specific to Apple’s [fiscal calendar](http://www.apple.com/itunes/go/itunesconnect/financialreports) | -               | **YES**  |
+| fiscal_period | number | Two-digit period in fiscal year of report to download (01-12). Period is specific to Apple’s [fiscal calendar](http://www.apple.com/itunes/go/itunesconnect/financialreports). | -               | **YES**  |
 
-###### CREATE A JSON WITH THE PATHS WHERE THE ARCHIVE WILL BE DOWNLOADED AND EXTRACTED
+``` javascript
+// Financial
+var parameters = {
+	username: "admin",
+	password: "adminpasswd",
+	vendor_number: "0088776655",
+	report_type: "DRR",
+	region_code: "US",
+	fiscal_year: 2014,
+	fiscal_period: 1
+};
+```
 
-```javascript
+Then you need to create another JSON object with the paths where the archive will be downloaded, extracted and transformed. **IMPORTANT :** All parameters are required.
+
+``` javascript
 var paths = {
-	archive: "PATH_WHERE_ARCHIVE_WILL_BE_DOWNLOADED",
-    report: "PATH_WHERE_ARCHIVE_WILL_BE_EXTRACTED",
-    json_report: "PATH_WHERE_REPORT_WILL_BE_FORMATTED"
+	archive: "/path/to/archive",
+    report: "/path/to/extracted/archive",
+    json_report: "/path/to/transformed/archive"
 };
+```
+
+You can now call the desired method to download a `Sales` report or a `Financial` report.
+
+``` javascript
+// Download Sales report
+AutoIngestTool.downloadSalesReport(salesParams, paths, function (err, updatedPaths) {
+  if (err && (err instanceof AutoIngestTool.INVALID_PARAMETERS_ERROR))
+    // Handle error
+  if (err && (err instanceof AutoIngestTool.INVALID_PATHS_ERROR))
+    // Handle error
+  if (err && (err instanceof AutoIngestTool.EMPTY_FILE_ERROR))
+    // Handle error
+  if (err)
+    // Handle error
+
+  console.log(result);
+});
+
+// Download Financial report
+AutoIngestTool.downloadFinancialReport(financialParams, paths, function (err, updatedPaths) {
+  if (err && (err instanceof AutoIngestTool.INVALID_PARAMETERS_ERROR))
+    // Handle error
+  if (err && (err instanceof AutoIngestTool.INVALID_PATHS_ERROR))
+    // Handle error
+  if (err && (err instanceof AutoIngestTool.EMPTY_FILE_ERROR))
+    // Handle error
+  if (err)
+    // Handle error
+
+  console.log(result);
+});
 ```
 
 **IMPORTANT :**
 
-* All parameters are required.
+- You can have an `INVALID_PARAMETERS_ERROR` or `INVALID_PATHS_ERROR` when there is an issue with the parameters or paths JSON.
+- If you try to download a report that have not been generated yet by Apple, you will receive an `EMPTY_FILE_ERROR` because the module have downloaded an empty file. This empty file will be removed automatically.
 
-###### CALL `downloadReportInPathsWithParameters` METHOD
+If there is no error, the callback will return an updated `paths` JSON object.
 
-```javascript
-AutoIngestTool.downloadReportInPathsWithParameters(
-	parameters,
-    paths,
-    function (err, filesPath) {
-    	if (err && (err instanceof AutoIngestTool.INVALID_PARAMETERS_ERROR)) return console.log(err);
-        if (err && (err instanceof AutoIngestTool.INVALID_PATHS_ERROR)) return console.log(err);
-        if (err && (err instanceof AutoIngestTool.EMPTY_FILE_ERROR)) return console.log(err);
-    	if (err) return console.log(err);
-
-        console.log(filesPath);
-    }
-);
+``` javascript
+// updatedPaths
+{
+  archive: "/path/to/archive.txt.gz",
+  report: "/path/to/extracted/archive.txt",
+  json_report: "/path/to/transformed/archive.json"
+}
 ```
 
-The report formatted in JSON will have one of these structures :
+Finally, you can open and parse the created JSON file and process it.
 
-* Sales report
+## Report Formats
 
-```json
+### Sales Report
+
+``` json
 [
 	{
     	"Provider": "APPLE",
@@ -131,9 +184,9 @@ The report formatted in JSON will have one of these structures :
 ]
 ```
 
-* Newsstand report
+### Newsstand Report
 
-```json
+``` json
 [
 	{
     	"Provider": "APPLE",
@@ -163,9 +216,9 @@ The report formatted in JSON will have one of these structures :
 ]
 ```
 
-* Opt-in report
+### Opt-in Report
 
-```json
+``` json
 [
 	{
     	"FirstName": "Oula",
@@ -179,8 +232,58 @@ The report formatted in JSON will have one of these structures :
 ]
 ```
 
-**IMPORTANT :**
+### Financial Report
 
-* You can have an `INVALID_PARAMETERS_ERROR` or `INVALID_PATHS_ERROR` when there is an issue with the parameters or paths JSON.
-* If you try to download a report that have not been generated yet by Apple, you will receive an `EMPTY_FILE_ERROR` because the module have downloaded an empty file. This empty file will be removed automatically.
-* If there is no error, the archive, report and json formatted report files path will be returned as a JSON.
+``` json
+[
+    {
+        "StartDate": "12/27/2015",
+        "End Date": "01/30/2016",
+        "UPC": null,
+        "ISRC_ISBN": null,
+        "VendorIdentifier": "APP001",
+        "Quantity": 295,
+        "PartnerShare": 2.10,
+        "ExtendedPartnerShare": 619.50,
+        "PartnerShareCurrency": "USD",
+        "SalesorReturn": "S",
+        "AppleIdentifier": "88776655",
+        "Artist_Show_Developer_Author": "Developer name",
+        "Title": "App Name",
+        "Label_Studio_Network_Developer_Publisher": null,
+        "Grid": null,
+        "ProductTypeIdentifier": "1F",
+        "ISAN_OtherIdentifier": null,
+        "CountryOfSale": "US",
+        "PreorderFlag": null,
+        "PromoCode": null,
+        "CustomerPrice": 2.99,
+        "CustomerCurrency": "USD"
+	},
+	{
+	    "TotalRows": 1,
+	    "TotalUnits": 295,
+	    "TotalAmount": 567
+	}
+]
+```
+
+## Unit Testing (only if you want to contribute)
+
+Actually you can only test sales report (daily, weekly, monthly and yearly) downloading. **Why?** We haven't created yet newsstand applications to get access to newsstand and opt-in reports.
+
+So feel free to add tests for these reports.
+
+### How To
+
+Install all dependencies and devDependencies
+
+``` sh
+$ npm install
+```
+
+Run test using `vows`
+
+``` sh
+$ vows tests/* --spec
+```

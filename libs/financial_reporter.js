@@ -206,7 +206,7 @@ function _createJSON(data, callback) {
                 headersLength = items.length;
 
                 _.forEach(items, function (item) {
-                    headersObject[item.replace(/ /g, "").replace(/\//g, "_")] = null;
+                    headersObject[item.replace(/[ -]/g, "").replace(/\//g, "_")] = null;
                 });
 
                 debug(headersObject);
@@ -220,7 +220,7 @@ function _createJSON(data, callback) {
 
                     _.forEach(items, function (value, index) {
                         if (value && value !== " ") {
-                            element[headersArray[index].replace(/ /g, "")] = value;
+                            element[headersArray[index].replace(/[ -]/g, "").replace(/\//g, "_")] = value;
                         }
                     });
 
