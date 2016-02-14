@@ -1,5 +1,10 @@
 # Changes Log
 
+###### 2.0.2
+
+* avoid code duplication by moving some functions in `Helpers` module
+* fix issue with `FinancialReporter` callback not used at the end
+
 ###### 2.0.0
 
 * refactor module into 2 submodules `SalesReporter` and `FinancialReporter`
