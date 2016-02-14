@@ -6,7 +6,8 @@ var debug  = require("debug")("autoingesttool::helpers.js"),
     async  = require("async"),
     mkdirp = require("mkdirp");
 
-var JSONValidator = require("./json_validator");
+var JSONValidator = require("./json_validator"),
+    Constants     = require("./constants");
 
 var EmptyFileError = require("../errors/empty_file_error");
 
