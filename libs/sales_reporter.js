@@ -50,13 +50,23 @@ function downloadSalesReport(params, paths, callback) {
                 next();
             },
             function (next) {
-                _downloadReportArchive(filename, params, paths, next);
+                var data = {
+                    USERNAME: params.username,
+                    PASSWORD: params.password,
+                    VNDNUMBER: params.vendor_number,
+                    TYPEOFREPORT: params.report_type,
+                    DATETYPE: params.date_type,
+                    REPORTTYPE: params.report_subtype,
+                    REPORTDATE: params.report_date
+                };
+
+                Helpers.downloadReportArchive(filename, data, paths, next);
             },
             function (next) {
                 Helpers.extractReportArchive(filename, paths, next);
             },
             function (next) {
-                _transformTextReportToJson(filename, paths, next);
+                Helpers.transformTextReportToJson(filename, paths, next);
             }
         ],
         function (err) {
@@ -83,128 +93,4 @@ function _validateData(params, paths, callback) {
     }
 
     callback();
-}
-
-function _downloadReportArchive(filename, params, paths, callback) {
-    var stream;
-    var data = {
-        USERNAME: params.username,
-        PASSWORD: params.password,
-        VNDNUMBER: params.vendor_number,
-        TYPEOFREPORT: params.report_type,
-        DATETYPE: params.date_type,
-        REPORTTYPE: params.report_subtype,
-        REPORTDATE: params.report_date
-    };
-
-    debug(data);
-
-    paths.archive = path.join(paths.archive, filename) + Constants.TEXT_EXT + Constants.GZIP_EXT;
-
-    debug(paths.archive);
-
-    if (fs.existsSync(paths.archive)) {
-        return callback();
-    }
-
-    debug("Archive file will be downloaded shortly ...");
-
-    stream = fs.createWriteStream(paths.archive);
-
-    request
-        .post(Constants.ITUNES_CONNECT_REPORTING_URL)
-        .form(data)
-        .pipe(stream);
-
-    stream.on("error", callback);
-    stream.on("finish", __finished);
-
-    function __finished() {
-        debug("Archive downloaded successfully!");
-
-        Helpers.isFileEmpty(paths.archive, callback);
-    }
-}
-
-function _transformTextReportToJson(filename, paths, callback) {
-    paths.json_report = path.join(paths.json_report, filename + Constants.JSON_EXT);
-
-    debug(paths.json_report);
-
-    if (fs.existsSync(paths.json_report)) {
-        return callback();
-    }
-
-    async.waterfall(
-        [
-            function (next) {
-                Helpers.readFile(paths.report, {encoding: "utf8"}, next);
-            },
-            function (data, next) {
-                _createJSON(data, next);
-            },
-            function (json, next) {
-                Helpers.writeFile(paths.json_report, JSON.stringify(json), {encoding: "utf8"}, next);
-            }
-        ],
-        function (err) {
-            if (err)
-                return callback(err);
-
-            debug("Text data transformed successfully to JSON!");
-
-            callback();
-        }
-    );
-}
-
-function _createJSON(data, callback) {
-    var headersArray, headersLength;
-    var json          = [],
-        headersObject = {},
-        count         = 0,
-        lines         = data.split("\n");
-
-    async.eachSeries(
-        lines,
-        function (line, next) {
-            var items = line.split("\t");
-
-            if (items.length === 0)
-                return next();
-
-            if (count === 0) {
-                count += 1;
-
-                headersArray = items;
-                headersLength = items.length;
-
-                _.forEach(items, function (item) {
-                    headersObject[item.replace(/ /g, "")] = null;
-                });
-
-                debug(headersObject);
-            }
-            else {
-                var element = clone(headersObject);
-
-                _.forEach(items, function (value, index) {
-                    if (value && value !== " ") {
-                        element[headersArray[index].replace(/ /g, "")] = value;
-                    }
-                });
-
-                json.push(element);
-            }
-
-            next();
-        },
-        function (err) {
-            if (err) {
-                return callback(err);
-            }
-
-            callback(null, json);
-        }
-    );
 }
