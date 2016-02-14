@@ -53,7 +53,7 @@ function downloadFinancialReport(params, paths, callback) {
             }
         ],
         function (err) {
-            console.log(err);
+            callback(err, paths)
         }
     );
 }
