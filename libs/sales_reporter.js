@@ -53,7 +53,7 @@ function downloadSalesReport(params, paths, callback) {
                 _downloadReportArchive(filename, params, paths, next);
             },
             function (next) {
-                _extractReportArchive(filename, paths, next);
+                Helpers.extractReportArchive(filename, paths, next);
             },
             function (next) {
                 _transformTextReportToJson(filename, paths, next);
@@ -124,38 +124,6 @@ function _downloadReportArchive(filename, params, paths, callback) {
 
         Helpers.isFileEmpty(paths.archive, callback);
     }
-}
-
-function _extractReportArchive(filename, paths, callback) {
-    var stream;
-    var archiveBuffer = fs.readFileSync(paths.archive);
-
-    paths.report = path.join(paths.report, filename + Constants.TEXT_EXT);
-
-    debug(paths.report);
-
-    if (fs.existsSync(paths.report)) {
-        return callback();
-    }
-
-    stream = fs.createWriteStream(paths.report);
-
-    stream.on("error", callback);
-    stream.on("finish", __finished);
-
-    function __finished() {
-        debug("Archive extracted successfully!");
-
-        callback();
-    }
-
-    Helpers.decompressRawBufferWithGunzip(archiveBuffer, function (err, data) {
-        if (err) {
-            return callback(err);
-        }
-
-        stream.end(data.toString(), "utf8");
-    });
 }
 
 function _transformTextReportToJson(filename, paths, callback) {

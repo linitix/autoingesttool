@@ -1,5 +1,6 @@
 var fs   = require("fs"),
-    zlib = require("zlib");
+    zlib = require("zlib"),
+    path = require("path");
 
 var debug  = require("debug")("autoingesttool::helpers.js"),
     async  = require("async"),
@@ -18,7 +19,8 @@ module.exports = {
     removeFile: removeFile,
     decompressRawBufferWithGunzip: decompressRawBufferWithGunzip,
     readFile: readFile,
-    writeFile: writeFile
+    writeFile: writeFile,
+    extractReportArchive: extractReportArchive
 };
 
 function zeroFill(num) {
@@ -87,4 +89,36 @@ function readFile(path, options, callback) {
 
 function writeFile(path, data, options, callback) {
     fs.writeFile(path, data, options, callback);
+}
+
+function extractReportArchive(filename, paths, callback) {
+    var stream;
+    var archiveBuffer = fs.readFileSync(paths.archive);
+
+    paths.report = path.join(paths.report, filename + Constants.TEXT_EXT);
+
+    debug(paths.report);
+
+    if (fs.existsSync(paths.report)) {
+        return callback();
+    }
+
+    stream = fs.createWriteStream(paths.report);
+
+    stream.on("error", callback);
+    stream.on("finish", __finished);
+
+    function __finished() {
+        debug("Archive extracted successfully!");
+
+        callback();
+    }
+
+    decompressRawBufferWithGunzip(archiveBuffer, function (err, data) {
+        if (err) {
+            return callback(err);
+        }
+
+        stream.end(data.toString(), "utf8");
+    });
 }
