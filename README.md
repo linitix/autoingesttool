@@ -27,6 +27,7 @@ Download the [iTunes Connect Sales And Trends Guide Apps](http://www.apple.com/i
 * Choose where all files will be created.
 * Downloading cancelled if archive already exists.
 * Extraction cancelled if text file already exists.
+* Promise support for sales and financial reports download
 
 ## Installation
 
@@ -116,8 +117,25 @@ AutoIngestTool.downloadSalesReport(salesParams, paths, function (err, updatedPat
   if (err)
     // Handle error
 
-  console.log(result);
+  console.log(updatedPaths);
 });
+
+// Download Sales report using promise
+AutoIngestTool.downloadSalesReport(salesParams, paths).then(
+  function(paths) {
+    console.log(paths);
+  },
+  function(err) {
+    if (err && (err instanceof AutoIngestTool.INVALID_PARAMETERS_ERROR))
+      // Handle error
+    if (err && (err instanceof AutoIngestTool.INVALID_PATHS_ERROR))
+      // Handle error
+    if (err && (err instanceof AutoIngestTool.EMPTY_FILE_ERROR))
+      // Handle error
+
+    console.log(err);
+  }
+);
 
 // Download Financial report
 AutoIngestTool.downloadFinancialReport(financialParams, paths, function (err, updatedPaths) {
@@ -130,8 +148,25 @@ AutoIngestTool.downloadFinancialReport(financialParams, paths, function (err, up
   if (err)
     // Handle error
 
-  console.log(result);
+  console.log(updatedPaths);
 });
+
+// Download Financial report using promise
+AutoIngestTool.downloadSalesReport(financialParams, paths).then(
+  function(paths) {
+    console.log(paths);
+  },
+  function(err) {
+    if (err && (err instanceof AutoIngestTool.INVALID_PARAMETERS_ERROR))
+      // Handle error
+    if (err && (err instanceof AutoIngestTool.INVALID_PATHS_ERROR))
+      // Handle error
+    if (err && (err instanceof AutoIngestTool.EMPTY_FILE_ERROR))
+      // Handle error
+
+    console.log(err);
+  }
+);
 ```
 
 **IMPORTANT :**
