@@ -5,7 +5,8 @@ var moment  = require("moment"),
     debug   = require("debug")("autoingesttool::financial_reporter.js"),
     async   = require("async"),
     request = require("request"),
-    _       = require("lodash");
+    _       = require("lodash"),
+    Q       = require("q");
 
 var JSONFileLoader = require("./json_file_loader"),
     Helpers        = require("./helpers");
@@ -22,6 +23,7 @@ module.exports = {
 
 function downloadFinancialReport(params, paths, callback) {
     var filename;
+    var deferred = Q.defer();
 
     async.waterfall(
         [
@@ -61,8 +63,20 @@ function downloadFinancialReport(params, paths, callback) {
                 Helpers.transformTextReportToJson(filename, paths, next);
             }
         ],
-        function (err) { callback(err, paths); }
+        function (err) {
+            if ( typeof callback !== "function" ) {
+                if ( err ) {
+                    return deferred.reject(err);
+                }
+
+                deferred.resolve(paths);
+            } else {
+                callback(err, paths);
+            }
+        }
     );
+
+    return deferred.promise;
 }
 
 /* ---------------------------------------------------------------------- */
