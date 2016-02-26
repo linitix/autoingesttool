@@ -1,67 +1,67 @@
 {
-  "type"      : "object",
-  "required"  : true,
-  "properties": {
-    "username"     : {
-      "type"    : "string",
-      "required": true
-    },
-    "password"     : {
-      "type"    : "string",
-      "required": true
-    },
-    "vendor_number": {
-      "type"    : "string",
-      "required": true
-    },
-    "region_code"  : {
-      "type"     : "string",
-      "required" : true,
-      "minLength": 2,
-      "maxLength": 2,
-      "enum"     : [
-        "AE",
-        "AU",
-        "CA",
-        "CH",
-        "DK",
-        "EU",
-        "GB",
-        "HK",
-        "ID",
-        "IL",
-        "IN",
-        "JP",
-        "MX",
-        "NO",
-        "NZ",
-        "RU",
-        "SA",
-        "SE",
-        "SG",
-        "TR",
-        "TW",
-        "US",
-        "WW",
-        "ZA"
-      ]
-    },
-    "report_type"  : {
-      "type"    : "string",
-      "required": true,
-      "enum"    : [
-        "DRR"
-      ]
-    },
-    "fiscal_year"  : {
-      "type"    : "number",
-      "required": true
-    },
-    "fiscal_period": {
-      "type"    : "number",
-      "required": true,
-      "minimum" : 1,
-      "maximum" : 12
+    "type": "object",
+    "required": true,
+    "properties": {
+        "username": {
+            "type": "string",
+            "required": true
+        },
+        "password": {
+            "type": "string",
+            "required": true
+        },
+        "vendor_number": {
+            "type": "string",
+            "required": true
+        },
+        "region_code": {
+            "type": "string",
+            "required": true,
+            "minLength": 2,
+            "maxLength": 2,
+            "enum": [
+                "AE",
+                "AU",
+                "CA",
+                "CH",
+                "DK",
+                "EU",
+                "GB",
+                "HK",
+                "ID",
+                "IL",
+                "IN",
+                "JP",
+                "MX",
+                "NO",
+                "NZ",
+                "RU",
+                "SA",
+                "SE",
+                "SG",
+                "TR",
+                "TW",
+                "US",
+                "WW",
+                "ZA"
+            ]
+        },
+        "report_type": {
+            "type": "string",
+            "required": true,
+            "enum": [
+                "DRR"
+            ]
+        },
+        "fiscal_year": {
+            "type": "number",
+            "required": true
+        },
+        "fiscal_period": {
+            "type": "number",
+            "required": true,
+            "minimum": 1,
+            "maximum": 12
+        }
     }
-  }
 }

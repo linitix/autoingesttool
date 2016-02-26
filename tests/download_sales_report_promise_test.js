@@ -9,13 +9,14 @@ var AutoIngestTool = require("../index");
 
 var TMP_DIR = path.join(__dirname, "..", "tmp");
 
-var suite = vows.describe("Download sales report");
+var suite = vows.describe("Download sales report using promise");
 
 suite
     .addBatch({
         "when downloading the latest available daily sales report": {
             topic: function () {
-                var paths  = {
+                var self   = this,
+                    paths  = {
                         archive: TMP_DIR,
                         report: TMP_DIR,
                         json_report: TMP_DIR
@@ -30,7 +31,12 @@ suite
                         report_date: moment().subtract(2, "days").format("YYYYMMDD")
                     };
 
-                AutoIngestTool.downloadSalesReport(params, paths, this.callback);
+                AutoIngestTool
+                    .downloadSalesReport(params, paths)
+                    .then(
+                        function (paths) { self.callback(null, paths); },
+                        function (err) { self.callback(err); }
+                    );
             },
             "we can open the JSON file": {
                 topic: function (paths) {
@@ -53,7 +59,8 @@ suite
     .addBatch({
         "when downloading the latest available weekly sales report": {
             topic: function () {
-                var paths  = {
+                var self   = this,
+                    paths  = {
                         archive: TMP_DIR,
                         report: TMP_DIR,
                         json_report: TMP_DIR
@@ -68,7 +75,12 @@ suite
                         report_date: moment().day(-7).format("YYYYMMDD")
                     };
 
-                AutoIngestTool.downloadSalesReport(params, paths, this.callback);
+                AutoIngestTool
+                    .downloadSalesReport(params, paths)
+                    .then(
+                        function (paths) { self.callback(null, paths); },
+                        function (err) { self.callback(err); }
+                    );
             },
             "we can open the JSON file": {
                 topic: function (paths) {
@@ -91,7 +103,8 @@ suite
     .addBatch({
         "when downloading the latest available monthly sales report": {
             topic: function () {
-                var paths  = {
+                var self   = this,
+                    paths  = {
                         archive: TMP_DIR,
                         report: TMP_DIR,
                         json_report: TMP_DIR
@@ -106,7 +119,12 @@ suite
                         report_date: moment().subtract(1, "months").format("YYYYMM")
                     };
 
-                AutoIngestTool.downloadSalesReport(params, paths, this.callback);
+                AutoIngestTool
+                    .downloadSalesReport(params, paths)
+                    .then(
+                        function (paths) { self.callback(null, paths); },
+                        function (err) { self.callback(err); }
+                    );
             },
             "we can open the JSON file": {
                 topic: function (paths) {
@@ -129,7 +147,8 @@ suite
     .addBatch({
         "when downloading the latest available yearly sales report": {
             topic: function () {
-                var paths  = {
+                var self   = this,
+                    paths  = {
                         archive: TMP_DIR,
                         report: TMP_DIR,
                         json_report: TMP_DIR
@@ -144,7 +163,12 @@ suite
                         report_date: moment().subtract(1, "years").format("YYYY")
                     };
 
-                AutoIngestTool.downloadSalesReport(params, paths, this.callback);
+                AutoIngestTool
+                    .downloadSalesReport(params, paths)
+                    .then(
+                        function (paths) { self.callback(null, paths); },
+                        function (err) { self.callback(err); }
+                    );
             },
             "we can open the JSON file": {
                 topic: function (paths) {

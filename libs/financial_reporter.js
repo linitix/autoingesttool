@@ -6,11 +6,10 @@ var moment  = require("moment"),
     async   = require("async"),
     request = require("request"),
     _       = require("lodash"),
-    clone   = require("clone");
+    Q       = require("q");
 
 var JSONFileLoader = require("./json_file_loader"),
-    Helpers        = require("./helpers"),
-    Constants      = require("./constants");
+    Helpers        = require("./helpers");
 
 var InvalidParametersError = require("../errors/invalid_parameters_error"),
     InvalidPathsError      = require("../errors/invalid_paths_error");
@@ -24,6 +23,7 @@ module.exports = {
 
 function downloadFinancialReport(params, paths, callback) {
     var filename;
+    var deferred = Q.defer();
 
     async.waterfall(
         [
@@ -34,7 +34,8 @@ function downloadFinancialReport(params, paths, callback) {
                 Helpers.createDirectories(paths, next);
             },
             function (next) {
-                var elements = [params.vendor_number, params.region_code, params.report_type, params.fiscal_year, params.fiscal_period];
+                var elements = [ params.vendor_number, params.region_code, params.report_type, params.fiscal_year,
+                    params.fiscal_period ];
 
                 filename = Helpers.join(elements, "_");
 
@@ -63,9 +64,19 @@ function downloadFinancialReport(params, paths, callback) {
             }
         ],
         function (err) {
-            callback(err, paths)
+            if ( typeof callback !== "function" ) {
+                if ( err ) {
+                    return deferred.reject(err);
+                }
+
+                deferred.resolve(paths);
+            } else {
+                callback(err, paths);
+            }
         }
     );
+
+    return deferred.promise;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -75,13 +86,13 @@ function _validateData(params, paths, callback) {
 
     errors = Helpers.validateJSON("financial_report", params, financialReportSchema);
 
-    if (errors) {
+    if ( errors ) {
         return callback(new InvalidParametersError("Please enter all the required parameters. For help, please download the latest User Guide from the Payments and Financial module in iTunes Connect.", errors));
     }
 
     errors = Helpers.validateJSON("paths", paths, pathsSchema);
 
-    if (errors) {
+    if ( errors ) {
         return callback(new InvalidPathsError("Please enter all the required path parameters.", errors));
     }
 

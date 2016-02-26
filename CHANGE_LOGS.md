@@ -1,5 +1,11 @@
 # Changes Log
 
+###### 2.1.0
+
+* reformat and refactor code
+* add promise for sales report and financial report download
+* add test suite for sales report using promise
+
 ###### 2.0.2
 
 * avoid code duplication by moving some functions in `Helpers` module

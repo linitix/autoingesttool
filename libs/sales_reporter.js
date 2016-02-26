@@ -1,16 +1,14 @@
 var fs   = require("fs"),
     path = require("path");
 
-var moment  = require("moment"),
-    debug   = require("debug")("autoingesttool::sales_reporter.js"),
-    async   = require("async"),
-    request = require("request"),
-    _       = require("lodash"),
-    clone   = require("clone");
+var moment = require("moment"),
+    debug  = require("debug")("autoingesttool::sales_reporter.js"),
+    async  = require("async"),
+    _      = require("lodash"),
+    Q      = require("q");
 
 var JSONFileLoader = require("./json_file_loader"),
-    Helpers        = require("./helpers"),
-    Constants      = require("./constants");
+    Helpers        = require("./helpers");
 
 var InvalidParametersError = require("../errors/invalid_parameters_error"),
     InvalidPathsError      = require("../errors/invalid_paths_error");
@@ -26,8 +24,9 @@ module.exports = {
 
 function downloadSalesReport(params, paths, callback) {
     var filename;
+    var deferred = Q.defer();
 
-    if (!params.report_date) {
+    if ( !params.report_date ) {
         params.report_date = moment().subtract(1, "days").format(DAILY_DATE_FORMAT);
     }
 
@@ -40,8 +39,8 @@ function downloadSalesReport(params, paths, callback) {
                 Helpers.createDirectories(paths, next);
             },
             function (next) {
-                var elements = [params.report_type, params.report_subtype, params.date_type, params.vendor_number,
-                    params.report_date];
+                var elements = [ params.report_type, params.report_subtype, params.date_type, params.vendor_number,
+                    params.report_date ];
 
                 filename = Helpers.join(elements, "_");
 
@@ -70,9 +69,19 @@ function downloadSalesReport(params, paths, callback) {
             }
         ],
         function (err) {
-            callback(err, paths);
+            if ( typeof callback !== "function" ) {
+                if ( err ) {
+                    return deferred.reject(err);
+                }
+
+                deferred.resolve(paths);
+            } else {
+                callback(err, paths);
+            }
         }
     );
+
+    return deferred.promise;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -82,13 +91,13 @@ function _validateData(params, paths, callback) {
 
     errors = Helpers.validateJSON("sales_report", params, salesReportSchema);
 
-    if (errors) {
+    if ( errors ) {
         return callback(new InvalidParametersError("Please enter all the required parameters. For help, please download the latest User Guide from the Sales and Trends module in iTunes Connect.", errors));
     }
 
     errors = Helpers.validateJSON("paths", paths, pathsSchema);
 
-    if (errors) {
+    if ( errors ) {
         return callback(new InvalidPathsError("Please enter all the required path parameters.", errors));
     }
 
