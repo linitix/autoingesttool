@@ -4,7 +4,8 @@ var fs   = require("fs"),
 var moment = require("moment"),
     debug  = require("debug")("autoingesttool::sales_reporter.js"),
     async  = require("async"),
-    _      = require("lodash");
+    _      = require("lodash"),
+    Q      = require("q");
 
 var JSONFileLoader = require("./json_file_loader"),
     Helpers        = require("./helpers");
@@ -23,6 +24,7 @@ module.exports = {
 
 function downloadSalesReport(params, paths, callback) {
     var filename;
+    var deferred = Q.defer();
 
     if ( !params.report_date ) {
         params.report_date = moment().subtract(1, "days").format(DAILY_DATE_FORMAT);
@@ -67,9 +69,19 @@ function downloadSalesReport(params, paths, callback) {
             }
         ],
         function (err) {
-            callback(err, paths);
+            if ( typeof callback !== "function" ) {
+                if ( err ) {
+                    return deferred.reject(err);
+                }
+
+                deferred.resolve(paths);
+            } else {
+                callback(err, paths);
+            }
         }
     );
+
+    return deferred.promise;
 }
 
 /* ---------------------------------------------------------------------- */
