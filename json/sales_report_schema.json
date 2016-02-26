@@ -1,49 +1,49 @@
 {
-  "type"      : "object",
-  "required"  : true,
-  "properties": {
-    "username"      : {
-      "type"     : "string",
-      "required" : true
-    },
-    "password": {
-      "type"     : "string",
-      "required": true
-    },
-    "vendor_number": {
-      "type"     : "string",
-      "required": true
-    },
-    "report_type"  : {
-      "type"    : "string",
-      "required": true,
-      "enum"    : [
-        "Sales",
-        "Newsstand"
-      ]
-    },
-    "date_type"    : {
-      "type"    : "string",
-      "required": true,
-      "enum"    : [
-        "Daily",
-        "Weekly",
-        "Monthly",
-        "Yearly",
-        "Inception"
-      ]
-    },
-    "report_subtype": {
-      "type"    : "string",
-      "required": true,
-      "enum"    : [
-        "Summary",
-        "Detailed",
-        "Opt-In"
-      ]
-    },
-    "report_date"   : {
-      "type": "string"
+    "type": "object",
+    "required": true,
+    "properties": {
+        "username": {
+            "type": "string",
+            "required": true
+        },
+        "password": {
+            "type": "string",
+            "required": true
+        },
+        "vendor_number": {
+            "type": "string",
+            "required": true
+        },
+        "report_type": {
+            "type": "string",
+            "required": true,
+            "enum": [
+                "Sales",
+                "Newsstand"
+            ]
+        },
+        "date_type": {
+            "type": "string",
+            "required": true,
+            "enum": [
+                "Daily",
+                "Weekly",
+                "Monthly",
+                "Yearly",
+                "Inception"
+            ]
+        },
+        "report_subtype": {
+            "type": "string",
+            "required": true,
+            "enum": [
+                "Summary",
+                "Detailed",
+                "Opt-In"
+            ]
+        },
+        "report_date": {
+            "type": "string"
+        }
     }
-  }
 }

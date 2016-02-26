@@ -3,20 +3,18 @@ var JSONValidator = require("is-my-json-valid"),
 
 var CACHE = {};
 
-function validate(name, schema, data)
-{
-  if ( !CACHE[ name ] )
-  {
-    CACHE[ name ] = JSONValidator(schema, { verbose: true });
+function validate(name, schema, data) {
+    if ( !CACHE[ name ] ) {
+        CACHE[ name ] = JSONValidator(schema, { verbose: true });
 
-    debug(Object.keys(CACHE));
-  }
+        debug(Object.keys(CACHE));
+    }
 
-  CACHE[ name ](data);
+    CACHE[ name ](data);
 
-  return CACHE[ name ].errors;
+    return CACHE[ name ].errors;
 }
 
 module.exports = {
-  validate: validate
+    validate: validate
 };

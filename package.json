@@ -1,56 +1,56 @@
 {
-  "name": "autoingesttool",
-  "version": "2.0.2",
-  "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
-  "license": "MIT",
-  "author": {
-    "name": "Lenny Ticks",
-    "email": "npm@linitix.com"
-  },
-  "contributors": [
-    {
-      "name": "Ismael Gorissen",
-      "email": "ismael.gorissen@linitix.com"
+    "name": "autoingesttool",
+    "version": "2.0.2",
+    "description": "Apple Auto-Ingest tool written in JavaScript for NodeJS",
+    "license": "MIT",
+    "author": {
+        "name": "Lenny Ticks",
+        "email": "npm@linitix.com"
     },
-    {
-      "name": "Johny Varghese"
+    "contributors": [
+        {
+            "name": "Ismael Gorissen",
+            "email": "ismael.gorissen@linitix.com"
+        },
+        {
+            "name": "Johny Varghese"
+        }
+    ],
+    "keywords": [
+        "Apple",
+        "sales",
+        "trends",
+        "iTunes Connect",
+        "iTunes",
+        "reports",
+        "download",
+        "newsstand",
+        "opt-in"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:linitix/autoingesttool.git"
+    },
+    "bugs": {
+        "url": "https://github.com/linitix/autoingesttool/issues",
+        "email": "npm@linitix.com"
+    },
+    "dependencies": {
+        "async": "^1.5.2",
+        "clone": "^1.0.2",
+        "is-my-json-valid": "^2.12.4",
+        "lodash": "^4.3.0",
+        "mkdirp": "^0.5.1",
+        "moment": "^2.11.2",
+        "request": "^2.69.0"
+    },
+    "main": "./index",
+    "devDependencies": {
+        "debug": "^2.2.0",
+        "should": "^8.2.2",
+        "vows": "^0.8.1"
+    },
+    "scripts": {
+        "test": "vows tests/* --spec"
     }
-  ],
-  "keywords": [
-    "Apple",
-    "sales",
-    "trends",
-    "iTunes Connect",
-    "iTunes",
-    "reports",
-    "download",
-    "newsstand",
-    "opt-in"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:linitix/autoingesttool.git"
-  },
-  "bugs": {
-    "url": "https://github.com/linitix/autoingesttool/issues",
-    "email": "npm@linitix.com"
-  },
-  "dependencies": {
-    "async": "^1.5.2",
-    "clone": "^1.0.2",
-    "is-my-json-valid": "^2.12.4",
-    "lodash": "^4.3.0",
-    "mkdirp": "^0.5.1",
-    "moment": "^2.11.2",
-    "request": "^2.69.0"
-  },
-  "main": "./index",
-  "devDependencies": {
-    "debug": "^2.2.0",
-    "should": "^8.2.2",
-    "vows": "^0.8.1"
-  },
-  "scripts": {
-    "test": "vows tests/* --spec"
-  }
 }

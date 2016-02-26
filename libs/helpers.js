@@ -45,7 +45,7 @@ function createDirectories(paths, callback) {
     async.each(
         keys,
         function (key, next) {
-            mkdirp(paths[key], next);
+            mkdirp(paths[ key ], next);
         },
         callback
     );
@@ -61,18 +61,18 @@ function isFileEmpty(path, callback) {
     fs.stat(
         path,
         function (err, stats) {
-            if (err) {
+            if ( err ) {
                 return callback(err);
             }
 
             debug(stats);
 
-            if (stats.size !== 0) {
+            if ( stats.size !== 0 ) {
                 return callback();
             }
 
             removeFile(path, function (err) {
-                if (err) {
+                if ( err ) {
                     return callback(err);
                 }
 
@@ -105,7 +105,7 @@ function extractReportArchive(filename, paths, callback) {
 
     debug(paths.report);
 
-    if (fs.existsSync(paths.report)) {
+    if ( fs.existsSync(paths.report) ) {
         return callback();
     }
 
@@ -121,7 +121,7 @@ function extractReportArchive(filename, paths, callback) {
     }
 
     decompressRawBufferWithGunzip(archiveBuffer, function (err, data) {
-        if (err) {
+        if ( err ) {
             return callback(err);
         }
 
@@ -134,24 +134,24 @@ function transformTextReportToJson(filename, paths, callback) {
 
     debug(paths.json_report);
 
-    if (fs.existsSync(paths.json_report)) {
+    if ( fs.existsSync(paths.json_report) ) {
         return callback();
     }
 
     async.waterfall(
         [
             function (next) {
-                readFile(paths.report, {encoding: "utf8"}, next);
+                readFile(paths.report, { encoding: "utf8" }, next);
             },
             function (data, next) {
                 _createJSON(data, next);
             },
             function (json, next) {
-                writeFile(paths.json_report, JSON.stringify(json), {encoding: "utf8"}, next);
+                writeFile(paths.json_report, JSON.stringify(json), { encoding: "utf8" }, next);
             }
         ],
         function (err) {
-            if (err)
+            if ( err )
                 return callback(err);
 
             debug("Text data transformed successfully to JSON!");
@@ -170,7 +170,7 @@ function downloadReportArchive(filename, data, paths, callback) {
 
     debug(paths.archive);
 
-    if (fs.existsSync(paths.archive)) {
+    if ( fs.existsSync(paths.archive) ) {
         return callback();
     }
 
@@ -209,32 +209,32 @@ function _createJSON(data, callback) {
         function (line, next) {
             var items = line.split("\t");
 
-            if (items.length === 0)
+            if ( items.length === 0 )
                 return next();
 
-            if (count === 0) {
+            if ( count === 0 ) {
                 count += 1;
 
                 headersArray = items;
                 headersLength = items.length;
 
                 _.forEach(items, function (item) {
-                    headersObject[item.replace(/[ -]/g, "").replace(/\//g, "_")] = null;
+                    headersObject[ item.replace(/[ -]/g, "").replace(/\//g, "_") ] = null;
                 });
 
                 debug(headersObject);
             } else {
                 var element;
 
-                if (_.includes(items[0].toLowerCase(), "total")) {
-                    totalObject[items[0].replace(/_/g, "")] = items[1];
+                if ( _.includes(items[ 0 ].toLowerCase(), "total") ) {
+                    totalObject[ items[ 0 ].replace(/_/g, "") ] = items[ 1 ];
                     financial = true;
                 } else {
                     element = clone(headersObject);
 
                     _.forEach(items, function (value, index) {
-                        if (value && value !== " ") {
-                            element[headersArray[index].replace(/[ -]/g, "").replace(/\//g, "_")] = value;
+                        if ( value && value !== " " ) {
+                            element[ headersArray[ index ].replace(/[ -]/g, "").replace(/\//g, "_") ] = value;
                         }
                     });
 
@@ -245,11 +245,11 @@ function _createJSON(data, callback) {
             next();
         },
         function (err) {
-            if (err) {
+            if ( err ) {
                 return callback(err);
             }
 
-            if (financial)
+            if ( financial )
                 json.push(totalObject);
 
             callback(null, json);

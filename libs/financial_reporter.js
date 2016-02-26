@@ -5,12 +5,10 @@ var moment  = require("moment"),
     debug   = require("debug")("autoingesttool::financial_reporter.js"),
     async   = require("async"),
     request = require("request"),
-    _       = require("lodash"),
-    clone   = require("clone");
+    _       = require("lodash");
 
 var JSONFileLoader = require("./json_file_loader"),
-    Helpers        = require("./helpers"),
-    Constants      = require("./constants");
+    Helpers        = require("./helpers");
 
 var InvalidParametersError = require("../errors/invalid_parameters_error"),
     InvalidPathsError      = require("../errors/invalid_paths_error");
@@ -34,7 +32,8 @@ function downloadFinancialReport(params, paths, callback) {
                 Helpers.createDirectories(paths, next);
             },
             function (next) {
-                var elements = [params.vendor_number, params.region_code, params.report_type, params.fiscal_year, params.fiscal_period];
+                var elements = [ params.vendor_number, params.region_code, params.report_type, params.fiscal_year,
+                    params.fiscal_period ];
 
                 filename = Helpers.join(elements, "_");
 
@@ -62,9 +61,7 @@ function downloadFinancialReport(params, paths, callback) {
                 Helpers.transformTextReportToJson(filename, paths, next);
             }
         ],
-        function (err) {
-            callback(err, paths)
-        }
+        function (err) { callback(err, paths); }
     );
 }
 
@@ -75,13 +72,13 @@ function _validateData(params, paths, callback) {
 
     errors = Helpers.validateJSON("financial_report", params, financialReportSchema);
 
-    if (errors) {
+    if ( errors ) {
         return callback(new InvalidParametersError("Please enter all the required parameters. For help, please download the latest User Guide from the Payments and Financial module in iTunes Connect.", errors));
     }
 
     errors = Helpers.validateJSON("paths", paths, pathsSchema);
 
-    if (errors) {
+    if ( errors ) {
         return callback(new InvalidPathsError("Please enter all the required path parameters.", errors));
     }
 

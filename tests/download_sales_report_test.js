@@ -34,7 +34,7 @@ suite
             },
             "we can open the JSON file": {
                 topic: function (paths) {
-                    fs.readFile(paths.json_report, {encoding: "utf8"}, this.callback);
+                    fs.readFile(paths.json_report, { encoding: "utf8" }, this.callback);
                 },
                 "and parse it": {
                     topic: function (data) {
@@ -72,7 +72,7 @@ suite
             },
             "we can open the JSON file": {
                 topic: function (paths) {
-                    fs.readFile(paths.json_report, {encoding: "utf8"}, this.callback);
+                    fs.readFile(paths.json_report, { encoding: "utf8" }, this.callback);
                 },
                 "and parse it": {
                     topic: function (data) {
@@ -110,7 +110,7 @@ suite
             },
             "we can open the JSON file": {
                 topic: function (paths) {
-                    fs.readFile(paths.json_report, {encoding: "utf8"}, this.callback);
+                    fs.readFile(paths.json_report, { encoding: "utf8" }, this.callback);
                 },
                 "and parse it": {
                     topic: function (data) {
@@ -148,7 +148,7 @@ suite
             },
             "we can open the JSON file": {
                 topic: function (paths) {
-                    fs.readFile(paths.json_report, {encoding: "utf8"}, this.callback);
+                    fs.readFile(paths.json_report, { encoding: "utf8" }, this.callback);
                 },
                 "and parse it": {
                     topic: function (data) {
