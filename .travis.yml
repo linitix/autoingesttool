@@ -5,6 +5,8 @@ branches:
 
 language: node_js
 node_js:
+  - "5.10"
+  - "5.9"
   - "5.6"
   - "4.3"
 

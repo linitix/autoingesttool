@@ -1,0 +1,10 @@
+theme: material
+site_name: AutoIngestTool
+repo_url: https://github.com/linitix/autoingesttool
+repo_name: GitHub
+remote_branch: gh-pages
+remote_name: gh-pages
+pages:
+  - Home: index.md
+extra:
+  version: 2.1.1
