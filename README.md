@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/linitix/autoingesttool.png?label=ready&title=Ready)](https://waffle.io/linitix/autoingesttool)
 # autoingesttool
 
 [![Travis Build on branch master](https://img.shields.io/travis/linitix/autoingesttool/master.svg?style=flat-square)](https://travis-ci.org/linitix/autoingesttool/branches) [![NPM total downloads per month](https://img.shields.io/npm/dm/autoingesttool.svg?style=flat-square)](https://www.npmjs.com/package/autoingesttool) [![David dependencies](https://img.shields.io/david/linitix/autoingesttool.svg?style=flat-square)](https://david-dm.org/linitix/autoingesttool) [![David dev dependencies](https://img.shields.io/david/dev/linitix/autoingesttool.svg?style=flat-square)](https://david-dm.org/linitix/autoingesttool) [![CodeClimate](https://img.shields.io/codeclimate/github/linitix/autoingesttool.svg?style=flat-square)](https://codeclimate.com/github/linitix/autoingesttool)
